@@ -6,13 +6,13 @@ Sometimes you have to go back and forth between x/y coordinates and a linear ass
 
 **x and y coordinates to uni-dimensional coordinate:**
 ```java
-	int uniDimensional = y*width+x;
+int uniDimensional = y*width+x;
 ```
 
 **uni-dimensional coordinate to x and y coordinate:**
 ```java
-	int x = (int)i%width;
-	int y = (int)i/width;
+int x = (int)i%width;
+int y = (int)i/width;
 ```
 
 *width= eg. if you have a 4×3 grid with data/objects/images etc. then 4 is your width*
@@ -26,24 +26,24 @@ There are many fun ways to avoid delay() functions in Processing and Arduino. Be
 
 **positive delta timing:**
 ```java
-	long timestamp = 0;
-	long interval = 1000; // 1000 milliseconds = 1 second
-	if(millis() - timestamp > interval) {
-		timestamp = millis();
-		// run code within this block every 1 second!
-	}
+long timestamp = 0;
+long interval = 1000; // 1000 milliseconds = 1 second
+if(millis() - timestamp > interval) {
+	timestamp = millis();
+	// run code within this block every 1 second!
+}
 ```
 
 **negating delta timing:**
 ```java
-	long timestamp = 0;
-	long interval = 1000; // 1000 milliseconds = 1 second
-	if(millis() - timestamp < interval) return;
-	timestamp = millis();
-	// run code within this block every 1 second!
-	// it's just a different way of writing code, maybe a bit faster?
-	// the delta timing cancels your loop, e.g. draw() in Processing or loop() within Arduino
-	// also useful when used with State-machines
+long timestamp = 0;
+long interval = 1000; // 1000 milliseconds = 1 second
+if(millis() - timestamp < interval) return;
+timestamp = millis();
+// run code within this block every 1 second!
+// it's just a different way of writing code, maybe a bit faster?
+// the delta timing cancels your loop, e.g. draw() in Processing or loop() within Arduino
+// also useful when used with State-machines
 	
 ```
 
@@ -56,34 +56,34 @@ It will help you entangle code and to abstract your ideas into a code blocks. Wi
 If certain criteria match within the blocks, we can move forward to another block or remain within the block if needed.
 
 ```java
-	int state = INIT;
-  
-	static final int INIT = 0;
-	static final int NEXT = 1;
-	static final int RANDOM = 2;
+int state = INIT;
 
-	switch(state) {
-		case INIT:
-			// do something here
-			if(certainCriteriaIsMe) {
-				state = NEXT;
-			}
-		break;
+static final int INIT = 0;
+static final int NEXT = 1;
+static final int RANDOM = 2;
 
-		case NEXT:
-			if(millis() - timestamp < interval) return;
-			timestamp = millis();
+switch(state) {
+	case INIT:
+		// do something here
+		if(certainCriteriaIsMe) {
+			state = NEXT;
+		}
+	break;
 
-			// code in the NEXT state is only executed for example every 1 second, as we have seen in Delta timing
-			state = RANDOM;
-		break;
+	case NEXT:
+		if(millis() - timestamp < interval) return;
+		timestamp = millis();
 
-		case RANDOM:
-			// do some cool stuff.
-			// let's return to our first state then
-			state = INIT;
-		break;
-	}
+		// code in the NEXT state is only executed for example every 1 second, as we have seen in Delta timing
+		state = RANDOM;
+	break;
+
+	case RANDOM:
+		// do some cool stuff.
+		// let's return to our first state then
+		state = INIT;
+	break;
+}
 ```
 
 ---
