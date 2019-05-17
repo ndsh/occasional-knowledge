@@ -91,3 +91,46 @@ switch(state) {
 ### Base64 encoding/decoding
 
 Please check out my [Base64 encoding/decoding for Images in Processing repository](https://github.com/ndsh/base64_images_in_processing) on this matter. It's easy to use!
+
+---
+
+### Timestamp
+
+timestamp class
+```java
+import java.util.Date;
+
+class Timestamp {
+  public Timestamp() {
+  }
+  
+  long getTimestamp() {
+    Date d = new Date();
+    long current = d.getTime()/1000; 
+    return current;
+  }
+  
+  String getTime() {
+    return "["+ hour()+":"+minute()+":"+second()+"] ";
+  }
+  
+  String getDatePrefix() {
+    return (year() + "" + month() + "" + day() + "_");
+  }
+}
+```
+
+usage:
+
+```java
+Timestamp ts;
+
+void setup() {
+  ts = new Timestamp();
+  println(ts.getTimestamp());
+  
+}
+
+void draw() {
+}
+```
