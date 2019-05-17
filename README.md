@@ -87,3 +87,7 @@ switch(state) {
 ```
 
 ---
+
+### Base64 encoding/decoding
+
+Please check out my [Base64 encoding/decoding for Images in Processing repository](https://github.com/ndsh/base64_images_in_processing) on this matter. It's easy to use!
