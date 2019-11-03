@@ -134,3 +134,7 @@ void setup() {
 void draw() {
 }
 ```
+
+### speed up your modulos
+( relevant for microcontrollers with embedded C language but no floating point alu )
+https://embeddedgurus.com/stack-overflow/2011/02/efficient-c-tip-13-use-the-modulus-operator-with-caution/
