@@ -138,3 +138,45 @@ void draw() {
 ### speed up your modulos
 ( relevant for microcontrollers with embedded C language but no floating point alu )
 https://embeddedgurus.com/stack-overflow/2011/02/efficient-c-tip-13-use-the-modulus-operator-with-caution/
+
+### quickly resize an image without weird interpolation (smoothing)
+```java
+PImage img;
+PImage canvas;
+PGraphics dd;
+ 
+void setup() 
+{
+  size(200,200);
+  img = loadImage("base.png");
+  image(img,0,0);
+  dd = createGraphics(2*img.width,2*img.height);  
+  dd.noSmooth();  
+  dd.beginDraw();
+  dd.clear();
+  dd.endDraw();
+  noLoop();
+}
+ 
+void draw() 
+{
+  canvas = img.get(0,0,width,height);
+  canvas.loadPixels();
+  dd.beginDraw();
+  dd.loadPixels();
+  for (int y = 0; y < height; y++)
+  {
+    for (int x = 0; x < width; x++)
+    {
+      dd.set(x*2, y*2, canvas.get(x, y));
+      dd.set(x*2+1, y*2+1, canvas.get(x, y));
+      dd.set(x*2+1, y*2, canvas.get(x, y));
+      dd.set(x*2, y*2+1, canvas.get(x, y));
+    }
+  }  
+  dd.updatePixels();
+  dd.endDraw();
+  dd.save("zoom.png");
+  println("..finished.");
+}
+```java
