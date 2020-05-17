@@ -55,6 +55,7 @@ A finite-state machine, FSM or State machine can help you structure your code wa
 It will help you entangle code and to abstract your ideas into a code blocks. With the help of a switch-case block we can then structure our program better.
 If certain criteria match within the blocks, we can move forward to another block or remain within the block if needed.
 
+Processing example of a Finite-state machine:
 ```java
 int state = INIT;
 
@@ -62,27 +63,65 @@ static final int INIT = 0;
 static final int NEXT = 1;
 static final int RANDOM = 2;
 
-switch(state) {
-	case INIT:
-		// do something here
-		if(certainCriteriaIsMe) {
-			state = NEXT;
-		}
-	break;
+void setState(int _state) {
+  state = _state;
+}
 
-	case NEXT:
-		if(millis() - timestamp < interval) return;
-		timestamp = millis();
+void stateMachine(int state) {
+	switch(state) {
+		case INIT:
+			// do something here
+			if(certainCriteriaIsMe) {
+				setState(NEXT);
+			}
+		break;
 
-		// code in the NEXT state is only executed for example every 1 second, as we have seen in Delta timing
-		state = RANDOM;
-	break;
+		case NEXT:
+			if(millis() - timestamp < interval) return;
+			timestamp = millis();
 
-	case RANDOM:
-		// do some cool stuff.
-		// let's return to our first state then
-		state = INIT;
-	break;
+			// code in the NEXT state is only executed for example every 1 second, as we have seen in Delta timing
+			setState(RANDOM);
+		break;
+
+		case RANDOM:
+			// do some cool stuff.
+			// let's return to our first state then
+			setState(INIT);
+		break;
+	}
+}
+```
+
+Arduino example:
+```c++
+#define INTRO 0
+#define RUN 1
+
+int state = 0;
+
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  Serial.println("setup");
+}
+
+void loop() {
+  stateMachine();
+}
+
+void stateMachine() {
+  switch(state) {
+    case INTRO:
+      Serial.println("intro");
+      state = RUN;
+    break;
+
+    case RUN:
+      Serial.println("run");
+    break;
+  }
 }
 ```
 
@@ -139,6 +178,12 @@ void draw() {
 ( relevant for microcontrollers with embedded C language but no floating point alu )
 https://embeddedgurus.com/stack-overflow/2011/02/efficient-c-tip-13-use-the-modulus-operator-with-caution/
 
+tl;dr
+
+```c++
+C = A % B is equivalent to C = A - B * (A / B)
+```
+
 ### quickly resize an image without weird interpolation (smoothing)
 ```java
 PImage img;
@@ -179,4 +224,24 @@ void draw()
   dd.save("zoom.png");
   println("..finished.");
 }
+```
+
+### adjust aspect ratio
+with a Processing example:
+
+```java
+float[] calculateAspectRatioFit(float srcWidth, float srcHeight, float maxWidth, float maxHeight) {
+  //float[] result;
+  float ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+  float result[] = {srcWidth*ratio, srcHeight*ratio};
+  //return { width: srcWidth*ratio, height: srcHeight*ratio };
+  return result;
+}
+```
+
+usage:
+```java
+ PImage p = loadImage("yourImage.jpg");
+ float[] aspect = calculateAspectRatioFit(setWidth, setHeight, 1280, 720);
+ surface.setSize((int)aspect[0], (int)aspect[1]);
 ```
