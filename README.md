@@ -245,3 +245,17 @@ usage:
  float[] aspect = calculateAspectRatioFit(setWidth, setHeight, 1280, 720);
  surface.setSize((int)aspect[0], (int)aspect[1]);
 ```
+
+## Breathing LED (Apple Style)
+```c++
+int ledPin = 9;
+float speed = PI/2; // anything from PI to PI/2 goes here
+
+void setup() {
+}
+
+void loop() {
+    float val = (exp(sin(millis()/2000.0*speed)) - 0.36787944)*108.0;
+    analogWrite(ledPin, val);
+}
+```
