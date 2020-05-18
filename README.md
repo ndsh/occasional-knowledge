@@ -1,7 +1,10 @@
+[![](https://img.shields.io/badge/using-Processing-brightgreen.svg?style=flat-square&color=000000)](http://processing.org/)
+[![](https://img.shields.io/badge/using-Arduino-brightgreen.svg?style=flat-square&color=000000)](http://arduino.cc/)
+
 # Occasional Knowledge
 This repository is just a dump of things I occasionally need in daily problem solving but I am too lazy to properly memorize or whatever. I mainly work with Processing (Java), openFrameworks (C++) and Arduino (C/C++) but I have written examples in a way that they are universally understandable for beginners.
 
----
+
 
 ## Overview
 * [Transformations](#transformations)
@@ -15,7 +18,7 @@ This repository is just a dump of things I occasionally need in daily problem so
 ## Transformations
 
 ### Cartesian Transformations
-Sometimes you have to go back and forth between x/y coordinates and a linear assortment of data within an ArrayList
+Sometimes you have to go back and forth between x/y coordinates and a linear assortment of data, for example within an ArrayList or some similar list-like data structure.
 
 **x and y coordinates to uni-dimensional coordinate:**
 ```java
@@ -43,7 +46,7 @@ Please check out my [Base64 encoding/decoding for Images in Processing repositor
 ## Timing
 
 ### Delta timing
-There are many fun ways to avoid delay() functions in Processing and Arduino. Beginner's listen up!
+There are many *fun* ways to avoid delay() functions in Processing and Arduino. Beginners listen up!
 
 **positive delta timing:**
 ```java
@@ -64,7 +67,7 @@ timestamp = millis();
 // run code within this block every 1 second!
 // it's just a different way of writing code, maybe a bit faster?
 // the delta timing cancels your loop, e.g. draw() in Processing or loop() within Arduino
-// also useful when used with State-machines	
+// also useful when used with Finite State-machines	
 ```
 
 ### Timestamp
@@ -192,7 +195,7 @@ void stateMachine() {
 
 ## Performance
 
-### speed up your modulos
+### Speed up your modulos
 ( relevant for microcontrollers with embedded C language but no floating point alu )
 https://embeddedgurus.com/stack-overflow/2011/02/efficient-c-tip-13-use-the-modulus-operator-with-caution/
 
@@ -206,6 +209,9 @@ C = A % B is equivalent to C = A - B * (A / B)
 
 
 ### Map a float value with Arduino
+In Arduino you cannot natively map a float value. Period.
+Here is a function that fixes this issue.
+
 ```c++
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
@@ -217,6 +223,7 @@ float mapfloat(float x, float in_min, float in_max, float out_min, float out_max
 ## Random
 
 ### Breathing LED (Apple Style)
+Original source: https://sean.voisen.org/blog/2011/10/breathing-led-with-arduino/
 ```c++
 int ledPin = 9;
 float speed = PI/2; // anything from PI to PI/2 goes here
