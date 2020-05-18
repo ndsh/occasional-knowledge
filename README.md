@@ -1,8 +1,16 @@
 # Occasional Knowledge
 This repository is just a dump of things I occasionally need in daily problem solving but I am too lazy to properly memorize or whatever. I mainly work with Processing (Java), openFrameworks (C++) and Arduino (C/C++) but I have written examples in a way that they are universally understandable for beginners.
 
+---
+
 ## Overview
 * [Transformations](#transformations)
+* [Timing](#timing)
+* [Clean](#clean)
+* [Performance](#performance)
+* [Random](#random)
+
+---
 
 ## Transformations
 
@@ -26,6 +34,14 @@ int y = (int)i/width;
 
 ---
 
+### Base64 encoding/decoding
+
+Please check out my [Base64 encoding/decoding for Images in Processing repository](https://github.com/ndsh/base64_images_in_processing) on this matter. It's easy to use!
+
+---
+
+## Timing
+
 ### Delta timing
 There are many fun ways to avoid delay() functions in Processing and Arduino. Beginner's listen up!
 
@@ -48,11 +64,53 @@ timestamp = millis();
 // run code within this block every 1 second!
 // it's just a different way of writing code, maybe a bit faster?
 // the delta timing cancels your loop, e.g. draw() in Processing or loop() within Arduino
-// also useful when used with State-machines
-	
+// also useful when used with State-machines	
+```
+
+### Timestamp
+
+timestamp class
+```java
+import java.util.Date;
+
+class Timestamp {
+  public Timestamp() {
+  }
+  
+  long getTimestamp() {
+    Date d = new Date();
+    long current = d.getTime()/1000; 
+    return current;
+  }
+  
+  String getTime() {
+    return "["+ hour()+":"+minute()+":"+second()+"] ";
+  }
+  
+  String getDatePrefix() {
+    return (year() + "" + month() + "" + day() + "_");
+  }
+}
+```
+
+usage:
+
+```java
+Timestamp ts;
+
+void setup() {
+  ts = new Timestamp();
+  println(ts.getTimestamp());
+  
+}
+
+void draw() {
+}
 ```
 
 ---
+
+## Clean
 
 ### Finite-state machine
 A finite-state machine, FSM or State machine can help you structure your code way much better.
@@ -132,52 +190,7 @@ void stateMachine() {
 
 ---
 
-### Base64 encoding/decoding
-
-Please check out my [Base64 encoding/decoding for Images in Processing repository](https://github.com/ndsh/base64_images_in_processing) on this matter. It's easy to use!
-
----
-
-### Timestamp
-
-timestamp class
-```java
-import java.util.Date;
-
-class Timestamp {
-  public Timestamp() {
-  }
-  
-  long getTimestamp() {
-    Date d = new Date();
-    long current = d.getTime()/1000; 
-    return current;
-  }
-  
-  String getTime() {
-    return "["+ hour()+":"+minute()+":"+second()+"] ";
-  }
-  
-  String getDatePrefix() {
-    return (year() + "" + month() + "" + day() + "_");
-  }
-}
-```
-
-usage:
-
-```java
-Timestamp ts;
-
-void setup() {
-  ts = new Timestamp();
-  println(ts.getTimestamp());
-  
-}
-
-void draw() {
-}
-```
+## Performance
 
 ### speed up your modulos
 ( relevant for microcontrollers with embedded C language but no floating point alu )
@@ -189,7 +202,55 @@ tl;dr
 C = A % B is equivalent to C = A - B * (A / B)
 ```
 
-### quickly resize an image without weird interpolation (smoothing)
+---
+
+
+### Map a float value with Arduino
+```c++
+float mapfloat(float x, float in_min, float in_max, float out_min, float out_max) {
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+```
+
+---
+
+## Random
+
+### Breathing LED (Apple Style)
+```c++
+int ledPin = 9;
+float speed = PI/2; // anything from PI to PI/2 goes here
+
+void setup() {
+}
+
+void loop() {
+    float val = (exp(sin(millis()/2000.0*speed)) - 0.36787944)*108.0;
+    analogWrite(ledPin, val);
+}
+```
+
+### Adjust aspect ratio
+with a Processing example:
+
+```java
+float[] calculateAspectRatioFit(float srcWidth, float srcHeight, float maxWidth, float maxHeight) {
+  //float[] result;
+  float ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+  float result[] = {srcWidth*ratio, srcHeight*ratio};
+  //return { width: srcWidth*ratio, height: srcHeight*ratio };
+  return result;
+}
+```
+
+usage:
+```java
+ PImage p = loadImage("yourImage.jpg");
+ float[] aspect = calculateAspectRatioFit(setWidth, setHeight, 1280, 720);
+ surface.setSize((int)aspect[0], (int)aspect[1]);
+```
+
+### Integer-ration scaling aka "Quickly resize an image without that weird smudgy interpolation" (aka "sans smoothing")
 ```java
 PImage img;
 PImage canvas;
@@ -228,46 +289,5 @@ void draw()
   dd.endDraw();
   dd.save("zoom.png");
   println("..finished.");
-}
-```
-
-### adjust aspect ratio
-with a Processing example:
-
-```java
-float[] calculateAspectRatioFit(float srcWidth, float srcHeight, float maxWidth, float maxHeight) {
-  //float[] result;
-  float ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-  float result[] = {srcWidth*ratio, srcHeight*ratio};
-  //return { width: srcWidth*ratio, height: srcHeight*ratio };
-  return result;
-}
-```
-
-usage:
-```java
- PImage p = loadImage("yourImage.jpg");
- float[] aspect = calculateAspectRatioFit(setWidth, setHeight, 1280, 720);
- surface.setSize((int)aspect[0], (int)aspect[1]);
-```
-
-## Breathing LED (Apple Style)
-```c++
-int ledPin = 9;
-float speed = PI/2; // anything from PI to PI/2 goes here
-
-void setup() {
-}
-
-void loop() {
-    float val = (exp(sin(millis()/2000.0*speed)) - 0.36787944)*108.0;
-    analogWrite(ledPin, val);
-}
-```
-
-### Map a float value with Arduino
-```c++
-float mapfloat(float x, float in_min, float in_max, float out_min, float out_max) {
-  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 ```
