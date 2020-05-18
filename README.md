@@ -250,7 +250,7 @@ usage:
  surface.setSize((int)aspect[0], (int)aspect[1]);
 ```
 
-### Integer-ration scaling aka "Quickly resize an image without that weird smudgy interpolation" (aka "sans smoothing")
+### Integer-ratio scaling aka "Quickly resize an image without that weird smudgy interpolation" (aka "sans smoothing")
 ```java
 PImage img;
 PImage canvas;
