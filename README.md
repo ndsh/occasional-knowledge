@@ -1,6 +1,10 @@
 [![](https://img.shields.io/badge/using-Processing-brightgreen.svg?style=flat-square&color=000000)](http://processing.org/)
 [![](https://img.shields.io/badge/using-Arduino-brightgreen.svg?style=flat-square&color=000000)](http://arduino.cc/)
 
+| Information | Donate |
+|:------------|:-------|
+| knowledge that doesn't stick well or takes some time to settle in my brain. i come here often to look at the stuff :] | [![BuyMeACoffee](https://www.buymeacoffee.com/assets/img/guidelines/logo-mark-1.svg)](https://www.buymeacoffee.com/ndsh) |
+
 # Occasional Knowledge
 This repository is just a dump of things I occasionally need in daily problem solving but I am too lazy to properly memorize or whatever. I mainly work with Processing (Java), openFrameworks (C++) and Arduino (C/C++) but I have written examples in a way that they are universally understandable for beginners.
 
@@ -211,6 +215,15 @@ C = A % B is equivalent to C = A - B * (A / B)
 ### Map a float value with Arduino
 In Arduino you cannot natively map a float value. Period.
 Here is a function that fixes this issue.
+Credit: jonasotto.de / julian-h.de
+
+// original comment on this issue
+// for arduino :(
+// arduino is stupid.
+// so jonasotto.de and me wrote this.
+// end of problems.
+
+
 
 ```c++
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max) {
