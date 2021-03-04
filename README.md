@@ -43,7 +43,7 @@ int y = (int)i/width;
 
 ### Base64 encoding/decoding
 
-Please check out my [Base64 encoding/decoding for Images in Processing repository](https://github.com/ndsh/base64_images_in_processing) on this matter. It's easy to use!
+Please check out my [Base64 encoding/decoding for Images in Processing repository](https://github.com/ndsh/sketches/tree/master/01%20Classes/04%20Base64) on this matter. It's easy to use!
 
 ---
 
@@ -309,5 +309,52 @@ void draw()
   dd.endDraw();
   dd.save("zoom.png");
   println("..finished.");
+}
+```
+
+### Switch Processing Sketch between "fullScreen" and "normal" Screen
+```java
+boolean big = true;
+void setup(){
+  fullScreen();
+  surface.setResizable(true);
+  surface.setSize(600, 400);
+}
+ 
+void draw(){
+  rect(200, 200, 20, 20);
+}
+ 
+void mousePressed(){
+  if(big) {
+    surface.setSize(600,400);
+    big = false;
+  } else {
+    surface.setSize(displayWidth,displayHeight);
+    big = true;
+  }
+}
+```
+
+### Average Color of a certain rectangular area
+```java
+color averageColor(PImage source, float x, float y, float w, float h) {
+  PImage temp = source.get((int)x, (int)y, (int)w, (int)h);
+  temp.loadPixels();
+  int r = 0;
+  int g = 0;
+  int b = 0;
+  
+  for (int i=0; i<temp.pixels.length; i++) {
+    color c = temp.pixels[i];
+    r += c>>16&0xFF;
+    g += c>>8&0xFF;
+    b += c&0xFF;
+  }
+  r /= temp.pixels.length;
+  g /= temp.pixels.length;
+  b /= temp.pixels.length;
+ 
+  return color(r, g, b);
 }
 ```
