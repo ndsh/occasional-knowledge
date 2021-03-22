@@ -351,10 +351,59 @@ color averageColor(PImage source, float x, float y, float w, float h) {
     g += c>>8&0xFF;
     b += c&0xFF;
   }
+
+  // return the mean of the R, G and B conponents
   r /= temp.pixels.length;
   g /= temp.pixels.length;
   b /= temp.pixels.length;
  
   return color(r, g, b);
 }
+```
+
+### Average Color of a certain circular area
+```java
+color averageColorCircular(PImage img, int x, int y, int radius) {
+  float r = 0;
+  float g = 0;
+  float b = 0;
+  int num = 0;
+
+  /* Iterate through a bounding box in which the circle lies */
+  for (int i = x - radius; i < x + radius; i++) {
+    for (int j = y - radius; j < y + radius; j++) {
+
+      // if pixel is outside of canvas: skip
+      if (i < 0 || i >= width || j < 0 || j >= height)
+        continue;
+
+      // if pixel is outside of circle: skip
+      if (dist(x, y, i, j) > r)
+        continue;
+
+      color c = img.get(i, j);
+      r += c>>16&0xFF;
+      g += c>>8&0xFF;
+      b += c&0xFF;
+      num++;
+    }
+  }
+
+  // return the mean of the R, G, and B components
+  return color(r/num, g/num, b/num);
+}
+```
+
+### Averaging RGB colors the right way
+Video explainer by minutephysics: [Computer Color is Broken](https://www.youtube.com/watch?v=LKnqECcg6Gw&ab_channel=minutephysics)
+instead of using for example:
+```java
+  r += c>>16&0xFF;
+  r /= temp.pixels.length;
+```
+
+sum the squares of components and return th sqrt of the squared R, G and B sums:
+```java
+  r += (c>>16&0xFF) * (c>>16&0xFF);
+  r /= sqrt(r/temp.pixels.length);
 ```
