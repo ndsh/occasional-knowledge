@@ -596,3 +596,193 @@ float map3(float value, float start1, float stop1, float start2, float stop2, fl
   return out;
 }
 ```
+
+### Serial communication with Arduino (or in this case Teensy)
+From PaulStoffregen: [UART + I2C display --> not working over 1200 baud rate for UART](https://forum.pjrc.com/threads/67454-UART-I2C-display-gt-not-working-over-1200-baud-rate-for-UART?p=281054#post281054)
+
+*Sending Microcontroller*
+```c++
+int pin0 = A0;
+int pin1 = A1;
+unsigned long my_time;
+int reset_switch = 16;
+int reset_pin = 0;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(reset_switch, INPUT_PULLUP);
+  Serial.begin(9600);
+  Serial1.begin(1000000);
+  Serial.println("Start Send");
+  if (Serial.available() > 0) {
+    Serial.clear();
+    delay(50);
+  }
+  if (Serial1.available() > 0) {
+    Serial1.clear();
+    delay(50);
+  }
+}
+
+void loop() {
+  static int messageCount=0;
+  
+  reset_pin = digitalRead(reset_switch);
+  if (reset_pin == LOW) {
+    do_reset();
+  }
+  int val0 = map(analogRead(pin0), 0, 1023, 0, 1100);
+  int val1 = map(analogRead(pin1), 0, 1023, 0, 200);
+
+  my_time = millis();
+  Serial1.print("<");
+  Serial1.print(val0);
+  Serial1.print(",");
+  Serial1.print(val1);
+  Serial1.print(">");
+
+  Serial.print(reset_pin);
+  Serial.print("\t");
+  Serial.print(my_time);
+  Serial.print("\t");
+  Serial.print(val0);
+  Serial.print("\t");
+  Serial.println(val1);
+
+  // once every 5000 messages, allow a brief silent time
+  // for the receiver to detect line idle and then start bit
+  if (++messageCount >= 5000) {  
+    Serial1.flush(); // wait for buffered data to transmit
+    delayMicroseconds(10); // then wait approx 10 bit times
+    messageCount = 0;
+  }
+
+}
+
+void do_reset() {
+  // send reboot command -----
+  SCB_AIRCR = 0x05FA0004;
+}
+```
+
+*Receiving Microcontroller*
+```c++
+//Receiver Code
+
+const byte numChars = 32;
+char receivedChars[numChars];
+char tempChars[numChars];        // temporary array for use when parsing
+
+int integerFromPC = 0;
+float floatFromPC = 0.0;
+
+boolean newData = false;
+
+int reset_switch = 16;
+int reset_pin = 0;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(reset_switch, INPUT_PULLUP);
+  Serial.begin(9600);
+  Serial1.begin(1000000);
+
+  Serial.println("Start Receive");
+
+  if (Serial.available() > 0) {
+    Serial.clear();
+    delay(50);
+  }
+  if (Serial1.available() > 0) {
+    Serial1.clear();
+    delay(50);
+  }
+
+  Serial.println("start");
+
+}
+
+void loop() {
+
+  reset_pin = digitalRead(reset_switch);
+  if (reset_pin == LOW) {
+    do_reset();
+  }
+  
+  recvWithStartEndMarkers();
+  if (newData == true) {
+    strcpy(tempChars, receivedChars);
+    // this temporary copy is necessary to protect the original data
+    //   because strtok() used in parseData() replaces the commas with \0
+    parseData();
+    showParsedData();
+    newData = false;
+  }
+}
+
+
+void recvWithStartEndMarkers() {
+  static boolean recvInProgress = false;
+  static byte ndx = 0;
+  char startMarker = '<';
+  char endMarker = '>';
+  char rc;
+
+  while (Serial1.available() > 0 && newData == false) {
+    rc = Serial1.read();
+    //Serial.println((char)rc);
+
+    if (recvInProgress == true) {
+      if (rc != endMarker) {
+        receivedChars[ndx] = rc;
+        ndx++;
+        if (ndx >= numChars) {
+          ndx = numChars - 1;
+        }
+      }
+      else {
+        receivedChars[ndx] = '\0'; // terminate the string
+        recvInProgress = false;
+        ndx = 0;
+        newData = true;
+      }
+    }
+
+    else if (rc == startMarker) {
+      recvInProgress = true;
+    }
+    else {
+      Serial.print("Unexpected character: ");
+      Serial.println(rc);
+    }
+  }
+}
+
+//============
+
+void parseData() {      // split the data into its parts
+
+  char * strtokIndx; // this is used by strtok() as an index
+
+  strtokIndx = strtok(tempChars, ",");     // get the first part - the string
+  integerFromPC = atoi(strtokIndx);     // convert this part to an integer
+
+  strtokIndx = strtok(NULL, ",");
+  floatFromPC = atof(strtokIndx);     // convert this part to a float
+
+}
+
+//============
+
+void showParsedData() {
+  Serial.print("Integer ");
+  Serial.println(integerFromPC);
+  Serial.print("Float ");
+  Serial.println(floatFromPC);
+}
+
+void do_reset() {
+  // send reboot command -----
+  SCB_AIRCR = 0x05FA0004;
+}
+```
