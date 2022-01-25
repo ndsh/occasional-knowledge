@@ -786,3 +786,49 @@ void do_reset() {
   SCB_AIRCR = 0x05FA0004;
 }
 ```
+
+### get the aspect ratio of an image
+this is an easy one but i didn't think about it yesterday: what if you want to get the aspect ratio of an image? you divide the width by the height, right?
+width=200, height=100 = width/height = 200/100 = 2 = 2:1 aspect ratio.
+what if you have something more exotic or even something much more familiar?
+width=1920, height=1080 = 1920/1080 = 1.777777778 = 1.7778:1 ? it's technically correct, but we would rather see the "16:9" here.
+what we are missing is the GCD (greatest common divisor) or GGT (größter gemeinsamer teiler) to normalize the values.
+
+we can use either of these two implementations:
+
+```java
+// greatest common divisor. standard implementation.
+int gcd(int a, int b) {
+  if (a == 0) return b;
+  while (b != 0) {
+    if (a > b) a = a - b;
+    else b = b - a;
+  }
+  return a;
+}
+```
+
+```java
+// greatest common divisor. modified version
+int gcd2(int a, int b) {
+  int h;
+  while (b != 0) {
+    h = a % b;
+    a = b;
+    b = h;
+  }
+  return a;
+}
+```
+
+then use the following function (not fully implemented tho)
+```java
+void getAspectRatio(int _w, int _h) {
+  int divisor = gcd(_w, _h);
+  println((_w/divisor) + ":" + (_h/divisor)); 
+}
+
+getAspectRatio(1920, 1080);
+getAspectRatio(200, 100);
+getAspectRatio(1690, 2000);
+```
