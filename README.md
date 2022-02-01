@@ -39,6 +39,21 @@ int y = (int)i/width;
 
 *i= your current index, for example within a for-loop*
 
+**remap range (-1,1) to (0,1)
+
+example:
+-1 + 1 = 0 * 0,5 -> 0
+-0.5 + 1 = 0.5 * 0.5 -> 0.25
+0 + 1 = 1 * 0.5 -> 0.5
+0.5 + 1 = 1,5 * 0.5 -> 0.75
+1 + 1 = 2 * 0,5 -> 1
+
+```java
+float remap(float val) {
+    return (val + 1) * 0.5;
+}
+```
+
 ---
 
 ### Base64 encoding/decoding
