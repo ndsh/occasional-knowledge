@@ -39,7 +39,7 @@ int y = (int)i/width;
 
 *i= your current index, for example within a for-loop*
 
-**remap range (-1,1) to (0,1)
+**remap range (-1,1) to (0,1)**
 
 example:
 -1 + 1 = 0 * 0,5 -> 0
