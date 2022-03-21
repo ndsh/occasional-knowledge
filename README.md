@@ -847,3 +847,38 @@ getAspectRatio(1920, 1080);
 getAspectRatio(200, 100);
 getAspectRatio(1690, 2000);
 ```
+
+### how to write a processing library – get started
+quick start via shiffman:
+[https://github.com/sighack/easing-functions/tree/master/code/easing](easing-functions)
+[https://www.youtube.com/watch?v=pI2gvl9sdtE](How to Make a Processing (Java) Library Part 1)
+[https://www.youtube.com/watch?v=U0TGZCEWn8g](How to Make a Processing (Java) Library Part 2)
+
+follow everything in the tutorial, but if you want to compile and have it run in Processing4+ please change the following in resources/build.xml
+
+```xml
+<target name="copyToSketchbook">
+	…
+	<fileset dir="${project.tmp}/${project.name}"/>
+</target>
+```
+
+and modify it to:
+
+```xml
+<target name="copyToSketchbook">
+	…
+<fileset dir="${project.tmp}/${project.name}">
+		<!--
+			https://github.com/processing/processing-library-template/pull/31
+			To avoid the following error in Processing 4.0 and newer:
+			The library "${project.name}" cannot be used
+			because it contains the processing.core libraries.
+			Please contact the library author for an update.
+		 -->
+		<exclude name="**/core.jar"/>
+	</fileset>
+</target>
+```
+
+this will exclude the core.jar from compiling with the library and ensure that Processing4 can load and run your library.
