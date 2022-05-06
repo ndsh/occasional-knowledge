@@ -882,3 +882,15 @@ and modify it to:
 ```
 
 this will exclude the core.jar from compiling with the library and ensure that Processing4 can load and run your library.
+
+### modulo wrappers
+
+```java
+int modWrap(int i, int max) {
+  return ((i % max) + max) % max;
+}
+
+int modWrap(int a, int b){
+    return (a+(ceil(abs(a)/b))*b) % b;
+}
+```
