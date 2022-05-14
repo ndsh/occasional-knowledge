@@ -894,3 +894,12 @@ int modWrap(int a, int b){
     return (a+(ceil(abs(a)/b))*b) % b;
 }
 ```
+
+### Raspberry Pi autostart Processing sketches
+// have to update later with the proper example and a also watchdog example
+// these are just "notes" for now
+https://discourse.processing.org/t/autostart-a-program/24368/11
+https://forums.raspberrypi.com/viewtopic.php?f=91&t=287334&p=1738121&hilit=humidity#p1738121
+https://forums.raspberrypi.com/viewtopic.php?t=294014
+https://forums.raspberrypi.com/viewtopic.php?t=230911
+
