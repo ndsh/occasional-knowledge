@@ -883,6 +883,37 @@ and modify it to:
 
 this will exclude the core.jar from compiling with the library and ensure that Processing4 can load and run your library.
 
+### how to include another processing library into your own (for example: oscP5 inside your lib)
+1. add the .jar-file that you need to your eclipse project: drag & drop file to /lib
+2. in /resources/build.properties add the jar to the local classpath:
+```xml
+	classpath.local.include=core.jar,oscp5.jar
+```
+3. in build.xml add the jar as an exclude to the **<copyToSketchBook>** block:
+```xml
+<target name="copyToSketchbook">
+	…
+<fileset dir="${project.tmp}/${project.name}">
+		…
+		// possible other excludes
+		<exclude name="**/oscP5.jar"/> // or yourFileName.jar
+	</fileset>
+</target>
+```
+4. in your java-class add the imports to the header:
+
+```java
+// the standard stuff
+package display.library;
+import processing.core.*;
+
+// the lib import
+import oscP5.*;
+import netP5.*;
+```
+
+5. in your processing sketches import your library but also the imports that you did in step 4. this should do the trick for now.
+
 ### modulo wrappers
 
 ```java
@@ -902,4 +933,3 @@ https://discourse.processing.org/t/autostart-a-program/24368/11
 https://forums.raspberrypi.com/viewtopic.php?f=91&t=287334&p=1738121&hilit=humidity#p1738121
 https://forums.raspberrypi.com/viewtopic.php?t=294014
 https://forums.raspberrypi.com/viewtopic.php?t=230911
-
