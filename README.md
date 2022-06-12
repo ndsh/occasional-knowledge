@@ -16,6 +16,7 @@ This repository is just a dump of things I occasionally need in daily problem so
 * [Clean](#clean)
 * [Performance](#performance)
 * [Random](#random)
+* [Raspberry PI](#raspberry)
 
 ---
 
@@ -926,10 +927,17 @@ int modWrap(int a, int b){
 }
 ```
 
+## Raspberry
+
 ### Raspberry Pi autostart Processing sketches
 // have to update later with the proper example and a also watchdog example
 // these are just "notes" for now
-https://discourse.processing.org/t/autostart-a-program/24368/11
-https://forums.raspberrypi.com/viewtopic.php?f=91&t=287334&p=1738121&hilit=humidity#p1738121
-https://forums.raspberrypi.com/viewtopic.php?t=294014
-https://forums.raspberrypi.com/viewtopic.php?t=230911
+- https://discourse.processing.org/t/autostart-a-program/24368/11
+- https://forums.raspberrypi.com/viewtopic.php?f=91&t=287334&p=1738121&hilit=humidity#p1738121
+- https://forums.raspberrypi.com/viewtopic.php?t=294014 (this is the most important for now)
+- https://forums.raspberrypi.com/viewtopic.php?t=230911
+
+### How to kill a java sketch via ssh
+$pidof java
+// this will return the <PID>
+$kill SIGKILL <PID>
