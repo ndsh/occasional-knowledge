@@ -851,9 +851,12 @@ getAspectRatio(1690, 2000);
 
 ### how to write a processing library – get started
 quick start via shiffman:
-[https://github.com/sighack/easing-functions/tree/master/code/easing](easing-functions)
-[https://www.youtube.com/watch?v=pI2gvl9sdtE](How to Make a Processing (Java) Library Part 1)
-[https://www.youtube.com/watch?v=U0TGZCEWn8g](How to Make a Processing (Java) Library Part 2)
+- [https://github.com/sighack/easing-functions/tree/master/code/easing](easing-functions)
+- [https://www.youtube.com/watch?v=pI2gvl9sdtE](How to Make a Processing (Java) Library Part 1)
+- [https://www.youtube.com/watch?v=U0TGZCEWn8g](How to Make a Processing (Java) Library Part 2)
+
+a catalog of core.jar functions:
+https://processing.github.io/processing-javadocs/core/index-all.html
 
 follow everything in the tutorial, but if you want to compile and have it run in Processing4+ please change the following in resources/build.xml
 
