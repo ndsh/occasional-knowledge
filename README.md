@@ -940,6 +940,11 @@ int modWrap(int a, int b){
 - https://forums.raspberrypi.com/viewtopic.php?t=294014 (this is the most important for now)
 - https://forums.raspberrypi.com/viewtopic.php?t=230911
 
+i believe this goes into the lxde autostart file (from https://forum.processing.org/two/discussion/22968/#Comment_100027)
+```
+/usr/local/bin/processing-java --sketch=/home/pi/sketchbook/sketchname --run
+```
+
 ### How to kill a java sketch via ssh
 $pidof java
 // this will return the <PID>
