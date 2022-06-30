@@ -943,6 +943,13 @@ int modWrap(int a, int b){
 i believe this goes into the lxde autostart file (from https://forum.processing.org/two/discussion/22968/#Comment_100027)
 ```
 /usr/local/bin/processing-java --sketch=/home/pi/sketchbook/sketchname --run
+
+```
+
+example
+```
+/home/curtain/Downloads/processing-4.0b8/processing-java --sketch=/home/curtain/Desktop/sketchname --run
+
 ```
 
 ### How to kill a java sketch via ssh
