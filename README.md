@@ -956,3 +956,10 @@ example
 $pidof java
 // this will return the <PID>
 $kill SIGKILL <PID>
+
+
+# javascript
+create a two-dimensional empty array quickly:
+```javascript
+var arr = Array.from(Array(2), () => new Array(4));
+```
