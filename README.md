@@ -17,6 +17,7 @@ This repository is just a dump of things I occasionally need in daily problem so
 * [Performance](#performance)
 * [Random](#random)
 * [Raspberry PI](#raspberry)
+* [GLSL](#GLSL)
 
 ---
 
@@ -962,4 +963,12 @@ $kill SIGKILL <PID>
 create a two-dimensional empty array quickly:
 ```javascript
 var arr = Array.from(Array(2), () => new Array(4));
+```
+
+## GLSL
+need a mapping function like in Processing / p5.js for a shader?
+```GLSL
+float map(float value, float min1, float max1, float min2, float max2) {
+  return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+}
 ```
