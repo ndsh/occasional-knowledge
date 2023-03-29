@@ -965,6 +965,32 @@ create a two-dimensional empty array quickly:
 var arr = Array.from(Array(2), () => new Array(4));
 ```
 
+before using this, have your loadPixels on your canvas/buffer already loaded, here eg. randomStateBuffer
+```javascript
+
+function pset(x, y, d, v) {
+	let off = (int(y) * int(randomStateBuffer.width) + int(x)) * int(d) * 4;
+    randomStateBuffer.pixels[off] = v;
+    randomStateBuffer.pixels[off + 1] = v;
+	randomStateBuffer.pixels[off + 2] = v;
+	randomStateBuffer.pixels[off + 3] = v;
+	
+} 
+```
+
+```javascript
+function pget(x, y, d) {
+	let off = (int(y) * int(randomStateBuffer.width) + int(x)) * int(d) * 4;
+	let components = [
+	  randomStateBuffer.pixels[off],
+	  randomStateBuffer.pixels[off + 1],
+	  randomStateBuffer.pixels[off + 2],
+	  randomStateBuffer.pixels[off + 3]
+	];
+	return components;
+}
+```
+
 ## GLSL
 need a mapping function like in Processing / p5.js for a shader?
 ```GLSL
