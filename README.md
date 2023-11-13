@@ -255,6 +255,15 @@ set() is faster than image() when drawing untransformed images.
 
 ## Random
 
+### Smoothstep S-curve
+Via Jonas from https://github.com/gre/smoothstep/blob/master/index.js
+```
+module.exports = function smoothstep (min, max, value) {
+  var x = Math.max(0, Math.min(1, (value-min)/(max-min)));
+  return x*x*(3 - 2*x);
+};
+```
+
 ### Breathing LED (Apple Style)
 Original source: https://sean.voisen.org/blog/2011/10/breathing-led-with-arduino/
 ```c++
