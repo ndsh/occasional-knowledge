@@ -813,6 +813,19 @@ void do_reset() {
 }
 ```
 
+### snap to grid
+```p5js
+var grid = 2;
+var gridOffset = grid / 2;
+
+function snap(op) {
+  var cell = Math.round((op - gridOffset) / grid);
+  return cell * grid + gridOffset;
+}
+
+x = snap(x);
+```
+
 ### get the aspect ratio of an image
 this is an easy one but i didn't think about it yesterday: what if you want to get the aspect ratio of an image? you divide the width by the height, right?
 width=200, height=100 = width/height = 200/100 = 2 = 2:1 aspect ratio.
