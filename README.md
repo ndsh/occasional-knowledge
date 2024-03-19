@@ -981,7 +981,7 @@ example
 dtparam=audio=off
 force_eeprom_read=0
 
-dtoverlay=vc4-kms-v3d
+dtoverlay=vc4-kms-v3d,noaudio
 dtoverlay=hifiberry-dacplus,slave
 ```
 
