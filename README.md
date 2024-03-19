@@ -975,6 +975,16 @@ example
 
 ```
 
+### HiFi Bery DAC+ on Raspberry Pi 5
+/boot/config.txt
+```
+dtparam=audio=off
+force_eeprom_read=0
+
+dtoverlay=vc4-kms-v3d
+dtoverlay=hifiberry-dacplus,slave
+```
+
 ### How to kill a java sketch via ssh
 $pidof java
 // this will return the <PID>
