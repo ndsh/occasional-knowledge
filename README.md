@@ -956,6 +956,7 @@ int modWrap(int a, int b){
 ## Raspberry
 
 ### Raspberry Pi autostart Processing sketches
+method 1
 // have to update later with the proper example and a also watchdog example
 // these are just "notes" for now
 - https://discourse.processing.org/t/autostart-a-program/24368/11
@@ -973,6 +974,38 @@ example
 ```
 /home/curtain/Downloads/processing-4.0b8/processing-java --sketch=/home/curtain/Desktop/sketchname --run
 
+```
+
+method 2 (https://u-labs.de/portal/3-wege-1-verbotener-um-programme-auf-dem-raspberry-pi-os-automatisch-zu-starten/)
+via Desktop entry / XDKG Autostart.
+```Terminal	
+mkdir ~/.config/autostart
+nano ~/.config/autostart/[filename_or_appname].desktop
+```
+
+Then edit that file
+```
+[Desktop Entry]
+Type=Application
+Name=Run Processing
+Exec=[/usr/local/bin/processing-java --sketch=/home/pi/sketchbook/sketchname --run]
+Terminal=false
+```
+
+Method 3 ( Research )
+https://forums.raspberrypi.com/viewtopic.php?t=294014
+
+## Read-only RPI
+https://learn.adafruit.com/read-only-raspberry-pi/overview
+
+## Autohide Taskbar on RPI
+https://forums.raspberrypi.com/viewtopic.php?t=358654
+```
+>> in file .config/wf-panel-pi.ini ADD the following:
+>> autohide=true
+>> autohide_duration=500
+>> 
+>> Autohide duration is the time in Milliseconds before hiding the panel...(this is 1/2 second)
 ```
 
 ### HiFi Bery DAC+ on Raspberry Pi 5
