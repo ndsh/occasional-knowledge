@@ -955,6 +955,13 @@ int modWrap(int a, int b){
 
 ## Raspberry
 
+### RPI Checklist for autonomous installation
+[ ] autostart
+[ ] teamviewer
+[ ] no mouse in fullscreen
+[ ] remove taskbar —> https://forums.raspberrypi.com/viewtopic.php?t=325477
+[ ] overlayroot fs (file protection)
+
 ### Raspberry Pi autostart Processing sketches
 method 1
 // have to update later with the proper example and a also watchdog example
