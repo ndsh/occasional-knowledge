@@ -1070,3 +1070,16 @@ float map(float value, float min1, float max1, float min2, float max2) {
   return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
 }
 ```
+
+## Bits and pieces: Shaders
+Uniforms vs. Consts: Huge performance when used consts. I often turn all uniforms to consts to speed things up as part of my step of loading the shader.
+Uniforms are for things that change every frame, shader code is what stays constant every frame
+
+"Const and defines both can be use by compilers to make significant optimizations. They could end up removing sections of code, unfolding for loops, etc. All those are call “compilation time” optimizations… the resulting binary that gets execute in the GPU is hyper efficient. Uniform impact “run time” efficiency or/and optimizations. For example using if statements that check’s the state of a uniform in theory don’t produce logic branching… but still slower than a const and similar to a #ifdef.  (bearbeitet) 
+#defines are useful for meta programming (over const) because allows you to do some templeting. Very useful for reducing code size, sometimes at the expense of making your code a bit harder to read or debug.
+I personally use them a lot in lygia.xyz because of the flexibility of templating with macros"
+
+Defines:
+```#define R return```
+```~ph precision highp~uf uniform~T return~S smoothstep~N normalize~L length~cl clamp~Z floor~B abs~U min~G max~W vec3~V vec2~X vec4~F float~E 1e-2~MAXD 240~TAU ${TAU}~H0 uvec4(9,7,5,3)*23205u~D gl_VertexID```
+where every ~ gets replaced with a \n#define 
