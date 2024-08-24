@@ -253,6 +253,29 @@ set() is faster than image() when drawing untransformed images.
 
 ---
 
+### bitwise encoding
+put more "data" into a single color channel with bitwise encoding
+```javascript
+let rotation = 1;  // 01 (2 bits)
+let offset = 5;    // 101 (3 bits)
+let boolValue = 1; // 1 (1 bit)
+let imageSet = 4;  // 100 (3 bits)
+
+// Encoding the values
+let encodedValue = (rotation << 6) | (offset << 3) | (boolValue << 2) | imageSet;
+
+console.log("Encoded Value:", encodedValue); // This should output the combined value
+
+// Decoding the values
+let decodedRotation = (encodedValue >> 6) & 0b11; // 2 bits for rotation
+let decodedOffset = (encodedValue >> 3) & 0b111;  // 3 bits for offset
+let decodedBool = (encodedValue >> 2) & 0b1;      // 1 bit for bool
+let decodedImageSet = encodedValue & 0b111;       // 3 bits for image set
+
+console.log("Decoded Values:", decodedRotation, decodedOffset, decodedBool, decodedImageSet);
+
+```
+
 ## Random
 
 ### Smoothstep S-curve
