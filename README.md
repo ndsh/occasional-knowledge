@@ -976,6 +976,15 @@ int modWrap(int a, int b){
 }
 ```
 
+### truncate a float in Processing
+Let's say you want to reduce a float's precision to n-decimals. This is a quick and easy function:
+```java
+float truncate(float value, int decimals) {
+  float factor = pow(10, decimals);
+  return int(value * factor) / factor;
+}
+```
+
 ## Raspberry
 
 ### RPI Checklist for autonomous installation
